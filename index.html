@@ -19,7 +19,6 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 <style>
   :root{
     --ink:#0F3D75;
@@ -173,7 +172,7 @@
   /* ---------- SHELL ---------- */
   .topbar{
     background:linear-gradient(180deg,var(--ink-light),var(--ink));color:var(--white);
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;row-gap:8px;
+    display:flex;align-items:center;justify-content:space-between;
     padding:12px 20px;padding-top:calc(12px + env(safe-area-inset-top));
     position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(15,61,117,.18);
   }
@@ -229,28 +228,6 @@
   .search-row{display:flex;gap:8px;margin-bottom:14px;}
   .search-row input{flex:1;padding:10px 12px;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-size:14px;transition:border-color .15s ease, box-shadow .15s ease;}
   .search-row input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(37,99,235,.14);}
-  .scan-btn{display:flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0;padding:0 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:var(--white);color:var(--ink);font-weight:700;font-size:13px;min-height:41px;box-shadow:none;}
-  .scan-btn:hover{border-color:var(--green);color:var(--green);}
-  .scan-btn svg{width:18px;height:18px;flex-shrink:0;}
-  .barcode-row{display:flex;gap:8px;align-items:flex-end;}
-  .barcode-row .field{flex:1;margin-bottom:0;}
-  .scan-popup{
-    position:fixed;left:50%;top:calc(66px + env(safe-area-inset-top));transform:translateX(-50%);
-    z-index:150;display:flex;align-items:center;gap:12px;
-    background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);
-    padding:12px 18px;min-width:200px;max-width:90vw;
-    animation:scan-pop-in .2s cubic-bezier(.2,.8,.2,1);
-  }
-  .scan-popup .spi{width:32px;height:32px;border-radius:50%;background:var(--green);color:var(--white);
-    display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;}
-  .scan-popup .spn{font-weight:800;font-size:14px;color:var(--text);line-height:1.3;}
-  .scan-popup .spq{font-size:12px;color:var(--text-dim);font-weight:600;}
-  .scan-popup.fail{background:#FDEEEE;color:var(--red);font-weight:700;font-size:13px;text-align:center;justify-content:center;}
-  @keyframes scan-pop-in{from{opacity:0;transform:translateX(-50%) translateY(-8px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
-  #scanner-reader{width:100%;border-radius:var(--radius-sm);overflow:hidden;background:#000;min-height:220px;}
-  #scanner-reader video{border-radius:var(--radius-sm);}
-  .scanner-hint{font-size:11.5px;color:var(--text-dim);margin-top:10px;text-align:center;}
-  .scanner-err{font-size:12.5px;color:var(--red);margin-top:10px;text-align:center;}
   .item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;}
   .item-tile{
     border:1.5px solid var(--line);border-radius:var(--radius-md);padding:12px 12px 10px;background:var(--white);
@@ -416,9 +393,6 @@
   .printer-status .dot.ok{background:var(--green);}
   .printer-status .dot.off{background:var(--line);}
 
-  /* ---------- TOP BAR ACTION PILLS (scanner + printer) ---------- */
-  .topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
-
   /* ---------- PRINTER RECONNECT BUTTON (in top title bar) ---------- */
   .topbar-printer-btn{
     display:flex;align-items:center;gap:7px;
@@ -431,22 +405,6 @@
   .topbar-printer-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
   .topbar-printer-btn .dot.ok{background:var(--green);box-shadow:0 0 0 3px rgba(37,99,235,.25);}
   .topbar-printer-btn .dot.off{background:var(--red);}
-
-  /* ---------- SCANNER STATUS PILL (in top title bar) ---------- */
-  .topbar-scanner-btn{
-    display:flex;align-items:center;gap:7px;
-    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.35);
-    color:var(--white);border-radius:20px;padding:7px 14px;font-size:12.5px;font-weight:700;
-    min-height:36px;white-space:nowrap;transition:background .15s ease;
-  }
-  .topbar-scanner-btn:hover{background:rgba(255,255,255,.16);}
-  .topbar-scanner-btn.disconnected{background:var(--amber);color:var(--ink);border-color:var(--amber);}
-  .topbar-scanner-btn:disabled{opacity:.7;cursor:default;}
-  .topbar-scanner-btn:disabled:hover{background:rgba(255,255,255,.08);}
-  .topbar-scanner-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-  .topbar-scanner-btn .dot.ok{background:var(--green);box-shadow:0 0 0 3px rgba(37,99,235,.25);}
-  .topbar-scanner-btn .dot.off{background:var(--red);}
-
   .printer-msg{font-size:11.5px;color:var(--text-dim);margin-top:4px;background:var(--paper);border-radius:var(--radius-sm);padding:8px 10px;}
   .page-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
   .busy-overlay{position:fixed;inset:0;background:rgba(15,33,61,.6);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;z-index:200;}
@@ -478,9 +436,6 @@
     .topbar .brand2{font-size:15px;}
     .topbar-printer-btn{padding:6px 10px;font-size:11px;max-width:40vw;}
     .topbar-printer-btn span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .topbar-scanner-btn{padding:6px 10px;font-size:11px;max-width:40vw;}
-    .topbar-scanner-btn span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .scan-popup{top:calc(58px + env(safe-area-inset-top));}
     .item-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px;}
     .item-tile{padding:11px 11px 9px;}
     .cart-box{position:static;}
@@ -599,6 +554,7 @@
     bootLoadFailed:false,
     storageOk:true,
     storageErr:'',
+    lastBillSyncFailed:false,
     view:'billing',
     loginErr:'',
     showAdminPin:false,
@@ -655,8 +611,6 @@
     printer:{ device:null, characteristic:null, connected:false, name:'', writeChunk:220, status:'' },
     busyMsg:'',
     printerModalOpen:false,
-    scanner:{open:false, mode:null, msg:null, err:''},
-    scanMsg:null,
     profitFrom:'',
     profitTo:'',
     profitView:'daily',
@@ -1109,7 +1063,7 @@
         if(state.billEditForm && state.billEditForm.billId===id) state.billEditForm=null;
         state.busyMsg = 'Deleting bill…';
         render();
-        await Promise.all([persist('bills'), persist('items'), persist('deletedBills')]);
+        await persist('bills'); await persist('items'); await persist('deletedBills');
         state.busyMsg = '';
         render();
       });
@@ -1182,119 +1136,6 @@
       ) : '<div class="printer-msg">Printing is turned off — every Print button is hidden until this is switched back on.</div>')+
       '<button class="btn btn-ghost btn-block" id="pm-close" style="margin-top:8px;">Close</button>'+
     '</div></div>';
-  }
-
-  // ---------------- BARCODE SCANNER ----------------
-  // One shared camera-scan modal, reused from two places: the Billing
-  // search box (mode:'billing' — scanning adds/finds an item) and the
-  // Add/Edit Item form (mode:'item-form' — scanning just fills the
-  // barcode field). state.scanner.mode decides what a successful scan does.
-  var scannerInstance = null;
-
-  // Camera-based scanning needs getUserMedia, which browsers only expose
-  // on secure origins (https, or localhost) — most likely reason this
-  // comes back false is the app being served over plain http on a shop's
-  // local network. Drives the "Scanner Ready / Unavailable" topbar pill.
-  function scannerSupported(){
-    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-  }
-
-  function openScanner(mode){
-    state.scanner = {open:true, mode:mode, msg:null, err:''};
-    render();
-  }
-
-  function closeScanner(){
-    var inst = scannerInstance;
-    scannerInstance = null;
-    state.scanner.open = false;
-    if(inst){
-      inst.stop().then(function(){ try{ inst.clear(); }catch(e){} }).catch(function(){});
-    }
-    render();
-  }
-
-  function startScanner(){
-    if(typeof Html5Qrcode === 'undefined'){
-      state.scanner.err = 'Barcode scanner failed to load — check your internet connection and try again.';
-      render();
-      return;
-    }
-    var readerEl = document.getElementById('scanner-reader');
-    if(!readerEl) return;
-    scannerInstance = new Html5Qrcode('scanner-reader');
-    scannerInstance.start(
-      {facingMode:'environment'},
-      {fps:10, qrbox:{width:260, height:160}},
-      function onScanSuccess(decodedText){
-        if(!scannerInstance) return; // already handled/closing
-        var inst = scannerInstance;
-        scannerInstance = null;
-        inst.stop().then(function(){ try{ inst.clear(); }catch(e){} }).catch(function(){});
-        handleScanResult(decodedText);
-      },
-      function onScanFailure(){ /* fires continuously while no code is in frame — ignore */ }
-    ).catch(function(err){
-      state.scanner.err = 'Could not access the camera — allow camera permission and try again.';
-      render();
-    });
-  }
-
-  function handleScanResult(code){
-    var mode = state.scanner.mode;
-    state.scanner.open = false;
-    if(mode==='item-form'){
-      var bEl = document.getElementById('f-barcode');
-      if(bEl) bEl.value = code;
-      if(state.itemForm) state.itemForm.barcode = code;
-      render();
-      return;
-    }
-    // billing mode: try an exact barcode match against known items
-    var item = state.items.find(function(i){ return i.barcode && i.barcode===code; });
-    if(item){
-      if(item.stock<=0){
-        state.scanMsg = {ok:false, text:'"'+item.name+'" is out of stock.'};
-      } else {
-        addItemToCart(item);
-        var inCart = state.cart.find(function(c){ return c.id===item.id; });
-        state.scanMsg = {ok:true, name:item.name, qty:(inCart?inCart.qty:1)};
-      }
-    } else {
-      state.itemSearch = code;
-      state.scanMsg = {ok:false, text:'No item matches barcode '+code+' — showing search results instead.'};
-    }
-    render();
-    if(state.view==='billing') applyItemSearchFilter();
-    clearTimeout(scanMsgTimer);
-    scanMsgTimer = setTimeout(function(){ state.scanMsg=null; var el=document.getElementById('scan-popup'); if(el) el.remove(); }, 2400);
-  }
-  var scanMsgTimer = null;
-
-  // Shared by the tap-to-add tile handler and a successful billing-mode
-  // barcode scan, so both paths add stock/qty the same way.
-  function addItemToCart(item){
-    var existing = state.cart.find(function(c){ return c.id===item.id; });
-    var inCart = existing ? existing.qty : 0;
-    if(inCart>=item.stock) return;
-    if(existing) existing.qty++;
-    else state.cart.push({id:item.id, name:item.name, price:item.price, qty:1});
-    refreshCartBody();
-  }
-
-  function renderScannerModal(){
-    return '<div class="modal-bg" id="scanner-modal-bg"><div class="modal-box">'+
-      '<div class="section-head"><h3>Scan Barcode</h3></div>'+
-      '<div id="scanner-reader"></div>'+
-      (state.scanner.err ? '<div class="scanner-err">'+escapeHtml(state.scanner.err)+'</div>' : '<div class="scanner-hint">Point the camera at the item\'s barcode.</div>')+
-      '<button class="btn btn-ghost btn-block" id="scanner-close" style="margin-top:14px;">Cancel</button>'+
-    '</div></div>';
-  }
-
-  function bindScannerModal(){
-    var closeBtn = document.getElementById('scanner-close');
-    if(closeBtn) closeBtn.addEventListener('click', closeScanner);
-    startScanner();
   }
 
   function bindPrinterSettingsModal(){
@@ -1679,6 +1520,62 @@
     hr();
     if(state.shop.footer) center(state.shop.footer, 11, false);
     return canvas;
+  }
+
+  // =====================================================================
+  // AUTOMATED WHATSAPP BILL DELIVERY (TEXT-ONLY, for now)
+  // Fire-and-forget: after a bill is completed, if the customer has a
+  // phone number on file, this quietly asks the Apps Script backend to
+  // send the bill details as a plain WhatsApp text message. The Cloud
+  // API access token never touches this file (it lives only in the Apps
+  // Script project's Script Properties, off GitHub) — this function only
+  // talks to the same Apps Script URL already used for Sheet storage.
+  //
+  // Text-only for now (no photo) — simplest path to confirm sending
+  // works end-to-end. The photo version can be swapped back in later.
+  //
+  // By design this NEVER shows an error and NEVER blocks/interrupts
+  // billing: if the number isn't on WhatsApp, the backend is offline, or
+  // anything else goes wrong, it fails silently and the sale proceeds
+  // exactly as it would have before this feature existed.
+  // =====================================================================
+  function billToWhatsAppText(bill){
+    var lines = [];
+    lines.push(state.shop.name || 'Bill');
+    lines.push('Bill No: '+bill.no);
+    lines.push('Date: '+new Date(bill.dateISO).toLocaleString());
+    lines.push('');
+    (bill.items||[]).forEach(function(it){
+      lines.push(it.name+' x'+it.qty+'  '+money(it.price*it.qty));
+    });
+    lines.push('');
+    lines.push('Subtotal: '+money(bill.subtotal));
+    if(bill.discount) lines.push('Discount: -'+money(bill.discount));
+    lines.push('TOTAL: '+money(bill.total));
+    lines.push('Payment: '+bill.payment.toUpperCase()+(bill.chequeNo?' #'+bill.chequeNo:''));
+    if(bill.payment==='account') lines.push('Balance Due: '+money(billBalance(bill)));
+    if(bill.customerName) lines.push('');
+    if(bill.customerName) lines.push('Customer: '+bill.customerName);
+    if(state.shop.footer) lines.push('', state.shop.footer);
+    return lines.join('\n');
+  }
+
+  function sendBillWhatsAppSilently(bill){
+    try{
+      if(!bill || !bill.customerPhone || !bill.customerPhone.trim()) return;
+      if(!sheetConfigured()) return;
+      var text = billToWhatsAppText(bill);
+      fetch(CONFIG.SHEET_API_URL, {
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'}, // avoids CORS preflight
+        body: JSON.stringify({
+          action:'sendWhatsAppBillText',
+          phone: bill.customerPhone,
+          billNo: bill.no,
+          text: text
+        })
+      }).catch(function(){ /* silent — never surfaced to the cashier */ });
+    }catch(e){ /* silent — this feature must never break billing */ }
   }
 
   async function shareBillImage(bill){
@@ -2236,7 +2133,7 @@
       throw e;
     }
   }
-  async function storageSet(key, val){
+  async function storageSet(key, val, isRetry){
     if(!sheetConfigured()) return false;
     try{
       var res = await fetch(CONFIG.SHEET_API_URL, {
@@ -2259,6 +2156,14 @@
       state.storageOk = true;
       return true;
     }catch(e){
+      if(!isRetry){
+        // A lock timeout ("Sheet is busy") is usually a one-off — the lock
+        // that was held when we asked has almost always been released a
+        // second later. Give it one silent retry before bothering the
+        // user with the "Not saved" banner, same pattern storageGet uses.
+        await new Promise(function(r){ setTimeout(r, 1200); });
+        return storageSet(key, val, true);
+      }
       state.storageOk=false;
       state.storageErr = (e && e.message) || 'Save failed';
       return false;
@@ -2499,38 +2404,44 @@
     if(!sheetConfigured()) return;
     if(sheetSyncInFlight) return; // last write wins is fine; just avoid piling up requests
     sheetSyncInFlight = true;
-    var tasks = (onlyKey === 'shop')
-      ? [ storageSyncTab('Shop Details & Bill Settings', SHOP_HEADERS, buildShopRows()) ]
+    var tabs = (onlyKey === 'shop')
+      ? [ {sheet:'Shop Details & Bill Settings', headers:SHOP_HEADERS, rows:buildShopRows()} ]
       : [
-          storageSyncTab('Bills Details (All Bills)', BILLS_HEADERS, buildBillsRows()),
-          storageSyncTab('Bills Details (By Date)', BILLS_BY_DATE_HEADERS, buildBillsByDateRows()),
-          storageSyncTab('Customers Full Details', CUSTOMERS_HEADERS, buildCustomersRows()),
-          storageSyncTab('Customer Statement', CUSTOMER_STATEMENT_HEADERS, buildCustomerStatementRows()),
-          storageSyncTab('Stock Details', STOCK_HEADERS, buildStockRows()),
-          storageSyncTab('Stock In-Out', STOCK_MOVEMENTS_HEADERS, buildStockMovementsRows()),
-          storageSyncTab('Cash Sales (By Date)', CASH_SALES_BY_DATE_HEADERS, buildCashSalesByDateRows()),
-          storageSyncTab('Cheque Sales (By Date)', CHEQUE_SALES_BY_DATE_HEADERS, buildChequeSalesByDateRows()),
-          storageSyncTab('Credit Sales (By Date)', CREDIT_SALES_BY_DATE_HEADERS, buildCreditSalesByDateRows()),
-          storageSyncTab('Profit', PROFIT_HEADERS, buildProfitRows()),
-          storageSyncTab('Shop Details & Bill Settings', SHOP_HEADERS, buildShopRows()),
-          storageSyncTab('Cheque Details', CHEQUE_HEADERS, buildChequeRows()),
-          storageSyncTab('Account Details', ACCOUNTS_HEADERS, buildAccountsRows()),
-          storageSyncTab('Sales by day', DAILY_SALES_HEADERS, buildDailySalesRows()),
-          storageSyncTab('Cash In Hand', CASH_HEADERS, buildCashInHandRows()),
-          storageSyncTab('Logo', LOGO_HEADERS, buildLogoRows()),
-          storageSyncTab('Printers', PRINTERS_HEADERS, buildPrintersRows()),
-          storageSyncTab('Returns', RETURNS_HEADERS, buildReturnsRows())
+          {sheet:'Bills Details (All Bills)', headers:BILLS_HEADERS, rows:buildBillsRows()},
+          {sheet:'Bills Details (By Date)', headers:BILLS_BY_DATE_HEADERS, rows:buildBillsByDateRows()},
+          {sheet:'Customers Full Details', headers:CUSTOMERS_HEADERS, rows:buildCustomersRows()},
+          {sheet:'Customer Statement', headers:CUSTOMER_STATEMENT_HEADERS, rows:buildCustomerStatementRows()},
+          {sheet:'Stock Details', headers:STOCK_HEADERS, rows:buildStockRows()},
+          {sheet:'Stock In-Out', headers:STOCK_MOVEMENTS_HEADERS, rows:buildStockMovementsRows()},
+          {sheet:'Cash Sales (By Date)', headers:CASH_SALES_BY_DATE_HEADERS, rows:buildCashSalesByDateRows()},
+          {sheet:'Cheque Sales (By Date)', headers:CHEQUE_SALES_BY_DATE_HEADERS, rows:buildChequeSalesByDateRows()},
+          {sheet:'Credit Sales (By Date)', headers:CREDIT_SALES_BY_DATE_HEADERS, rows:buildCreditSalesByDateRows()},
+          {sheet:'Profit', headers:PROFIT_HEADERS, rows:buildProfitRows()},
+          {sheet:'Shop Details & Bill Settings', headers:SHOP_HEADERS, rows:buildShopRows()},
+          {sheet:'Cheque Details', headers:CHEQUE_HEADERS, rows:buildChequeRows()},
+          {sheet:'Account Details', headers:ACCOUNTS_HEADERS, rows:buildAccountsRows()},
+          {sheet:'Sales by day', headers:DAILY_SALES_HEADERS, rows:buildDailySalesRows()},
+          {sheet:'Cash In Hand', headers:CASH_HEADERS, rows:buildCashInHandRows()},
+          {sheet:'Logo', headers:LOGO_HEADERS, rows:buildLogoRows()},
+          {sheet:'Printers', headers:PRINTERS_HEADERS, rows:buildPrintersRows()},
+          {sheet:'Returns', headers:RETURNS_HEADERS, rows:buildReturnsRows()}
         ];
-    Promise.all(tasks).catch(function(){}).then(function(){ sheetSyncInFlight = false; });
+    // All tabs go in ONE request now (action:'syncAllTabs'), not 17
+    // concurrent ones. Firing 17 simultaneous fetches at the same Apps
+    // Script Web App right after every save was eating up the account's
+    // simultaneous-execution slots, so the real (locked) items/bills save
+    // could end up queued behind that flood long enough to time out even
+    // though the lock itself was never actually stuck for 45s.
+    storageSyncAllTabs(tabs).catch(function(){}).then(function(){ sheetSyncInFlight = false; });
   }
 
-  async function storageSyncTab(sheetName, headers, rows){
+  async function storageSyncAllTabs(tabs){
     if(!sheetConfigured()) return false;
     try{
       var res = await fetch(CONFIG.SHEET_API_URL, {
         method:'POST',
         headers:{'Content-Type':'text/plain;charset=utf-8'}, // avoids CORS preflight
-        body: JSON.stringify({ action:'syncTab', sheet:sheetName, headers:headers, rows:rows })
+        body: JSON.stringify({ action:'syncAllTabs', tabs:tabs })
       });
       if(!res.ok) throw new Error('HTTP '+res.status);
       var text = await res.text();
@@ -2873,36 +2784,6 @@
     '</button>';
   }
 
-  // Pill next to the printer one showing whether barcode scanning will
-  // work on this device/browser right now, and doubling as a shortcut to
-  // open the scanner from anywhere (adds straight to the current sale,
-  // same as the Scan button on the Billing page).
-  function renderTopbarScannerButton(){
-    var ok = scannerSupported();
-    var label = ok ? 'Scanner Ready' : 'Scanner Unavailable';
-    var title = ok ? 'Tap to scan a barcode' : (window.isSecureContext===false ? 'Camera needs a secure (HTTPS) connection.' : 'Camera scanning is not supported on this device/browser.');
-    return '<button class="topbar-scanner-btn'+(ok?'':' disconnected')+'" id="topbar-scan-btn" title="'+escapeHtml(title)+'"'+(ok?'':' disabled')+'>'+
-      '<span class="dot '+(ok?'ok':'off')+'"></span><span>'+escapeHtml(label)+'</span>'+
-    '</button>';
-  }
-
-  // Floating popup shown after every barcode scan, on top of whichever
-  // page you're on (the topbar shortcut above can trigger a scan from
-  // anywhere, not just the Billing page) — confirms what was scanned and
-  // how many of that item are now in the cart. Auto-dismisses itself the
-  // same way the old inline scan message used to (see scanMsgTimer).
-  function renderScanPopup(){
-    var m = state.scanMsg;
-    if(!m) return '';
-    if(m.ok){
-      return '<div class="scan-popup ok" id="scan-popup">'+
-        '<div class="spi">✓</div>'+
-        '<div><div class="spn">'+escapeHtml(m.name)+'</div><div class="spq">'+m.qty+' in cart</div></div>'+
-      '</div>';
-    }
-    return '<div class="scan-popup fail" id="scan-popup">'+escapeHtml(m.text)+'</div>';
-  }
-
   // Shown when boot() (or a retry) couldn't confirm your saved data from
   // the Google Sheet. Deliberately NOT auto-hidden by a timer — it should
   // stay up until the person either retries successfully or reloads, so
@@ -2962,9 +2843,8 @@
     return ''+
     '<div class="topbar">'+
       '<div class="brand2"><span>'+escapeHtml(state.shop.name)+'</span></div>'+
-      '<div class="topbar-actions">'+renderTopbarScannerButton()+renderTopbarPrinterButton()+'</div>'+
+      renderTopbarPrinterButton()+
     '</div>'+
-    renderScanPopup()+
     (state.bootLoadFailed ? renderBootFailBanner() : '')+
     '<div class="layout">'+
       '<div class="sidebar"><div class="nav-label">Menu</div>'+navHtml+'</div>'+
@@ -2973,8 +2853,7 @@
     '<div class="bottom-tabs">'+bottomNavHtml+'</div>'+
     (state.showReceipt ? renderReceiptModal() : '')+
     (state.showPaymentReceipt ? renderPaymentReceiptModal() : '')+
-    (state.printerModalOpen ? renderPrinterSettingsModal() : '')+
-    (state.scanner.open ? renderScannerModal() : '');
+    (state.printerModalOpen ? renderPrinterSettingsModal() : '');
   }
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -3118,9 +2997,7 @@
       '<h1 class="page-title">Billing</h1><p class="page-sub">Tap items to add them to the current sale.</p>'+
       '<div class="grid2">'+
         '<div>'+
-          '<div class="search-row"><input id="item-search" placeholder="Search items…" value="'+escapeHtml(state.itemSearch)+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">'+
-            '<button class="scan-btn" id="scan-item-btn" type="button" title="Scan barcode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M3 12h18"/></svg><span class="hide-sm">Scan</span></button>'+
-          '</div>'+
+          '<div class="search-row"><input id="item-search" placeholder="Search items…" value="'+escapeHtml(state.itemSearch)+'" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>'+
           '<div class="item-grid" id="item-grid">'+renderItemTilesHtml()+'</div>'+
         '</div>'+
         '<div class="card cart-box"><div class="cart-title">Current Sale</div><div id="cart-body">'+renderCartBodyHtml()+'</div></div>'+
@@ -3247,8 +3124,6 @@
   function bindBillingEvents(){
     var search = document.getElementById('item-search');
     if(search) search.addEventListener('input', function(e){ state.itemSearch = e.target.value; applyItemSearchFilter(); });
-    var scanBtn = document.getElementById('scan-item-btn');
-    if(scanBtn) scanBtn.addEventListener('click', function(){ openScanner('billing'); });
     bindItemGridEvents();
     bindCartBodyEvents();
     applyItemSearchFilter();
@@ -3262,7 +3137,12 @@
         var id = btn.getAttribute('data-add');
         var item = state.items.find(function(i){ return i.id===id; });
         if(!item || item.stock<=0) return;
-        addItemToCart(item);
+        var existing = state.cart.find(function(c){ return c.id===id; });
+        var inCart = existing ? existing.qty : 0;
+        if(inCart>=item.stock) return;
+        if(existing) existing.qty++;
+        else state.cart.push({id:item.id, name:item.name, price:item.price, qty:1});
+        refreshCartBody();
       });
     });
   }
@@ -3440,7 +3320,21 @@
         payments: paidNow>0 ? [{id:uid('pay'), dateISO:new Date().toISOString(), amount:paidNow, note:'Payment at time of sale', receivedBy: state.currentUser.name}] : []
       };
       state.bills.push(bill);
-      await Promise.all([ persist('items'), persist('bills') ]);
+      // items and bills used to be saved in parallel (Promise.all), which
+      // meant every single sale sent two requests that both needed the
+      // same Apps Script lock at once — after weeks of bills piling up,
+      // the "bills" value cell is large enough that writing it can eat
+      // most of the lock-wait window, so the request running alongside it
+      // (items) kept timing out. Saving them one after another instead
+      // means only one request ever needs the lock at a time.
+      var itemsOk = await persist('items');
+      var billsOk = await persist('bills');
+      var persistResults = [itemsOk, billsOk];
+      // persist() returns false (not a thrown error) on failure, so a bad
+      // save here was previously indistinguishable from a good one — the
+      // bill still showed/printed as if everything was fine even though
+      // it never reached the Sheet. Surface that instead of hiding it.
+      state.lastBillSyncFailed = persistResults.indexOf(false) !== -1;
       state.lastBill = bill;
       state.cart = [];
       state.discountVal = 0;
@@ -3451,6 +3345,9 @@
       state.accountPaidNow = 0;
       state.showReceipt = true;
       render();
+      // Fire-and-forget: never awaited, never blocks the receipt/print flow,
+      // and never surfaces an error to the cashier — see function comment.
+      sendBillWhatsAppSilently(bill);
       if(printingEnabled()){
         if(state.printer.connected){
           await printBillToBluetooth(bill);
@@ -3477,6 +3374,13 @@
     return ''+
     '<div class="modal-bg" id="receipt-bg"><div class="modal-box" style="position:relative;">'+
       '<button class="close-x" id="receipt-close">✕</button>'+
+      (state.lastBillSyncFailed ? (''+
+        '<div style="background:#FDF1E3;border:1px solid var(--red);color:var(--red);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:10px;font-size:13px;line-height:1.4;">'+
+          '<b>Not saved to Google Sheet.</b> This bill printed but only exists on this device right now — '+
+          escapeHtml(state.storageErr||'the Sheet could not be reached')+'. Tap Retry before closing this screen, or the bill can be lost on refresh.'+
+          '<button class="btn btn-danger btn-sm" id="receipt-retry-sync" style="display:block;margin-top:8px;">Retry Save</button>'+
+        '</div>'
+      ) : '')+
       '<div id="print-area"><div class="receipt-wrap '+widthClass+'">'+
         '<div class="r-center r-shopname">'+escapeHtml(state.shop.name)+'</div>'+
         '<div class="r-center">'+escapeHtml(state.shop.address)+'</div>'+
@@ -3539,6 +3443,15 @@
     if(btConnectBtn) btConnectBtn.addEventListener('click', connectPrinter);
     if(shareBtn) shareBtn.addEventListener('click', function(){ shareBillImage(state.lastBill); });
     if(viewBtn) viewBtn.addEventListener('click', function(){ viewBillImage(state.lastBill); });
+    var retrySyncBtn = document.getElementById('receipt-retry-sync');
+    if(retrySyncBtn) retrySyncBtn.addEventListener('click', async function(){
+      retrySyncBtn.disabled = true;
+      retrySyncBtn.textContent = 'Retrying…';
+      var itemsOk2 = await persist('items');
+      var billsOk2 = await persist('bills');
+      state.lastBillSyncFailed = (itemsOk2 && billsOk2) === false;
+      render();
+    });
   }
 
   // Receipt for a single payment recorded against a credit ("on account")
@@ -4200,7 +4113,7 @@
       state.returnForm = null;
       retSave.disabled = true;
       retSave.textContent = 'Returning…';
-      await Promise.all([persist('bills'), persist('items'), persist('returns')]);
+      await persist('bills'); await persist('items'); await persist('returns');
       render();
     });
 
@@ -4713,7 +4626,7 @@
         processedBy: state.currentUser.name
       });
       state.stockReturnForm = null;
-      await Promise.all([persist('items'), persist('returns')]);
+      await persist('items'); await persist('returns');
       render();
     });
     function closeStockReturnModal(){ state.stockReturnForm=null; render(); }
@@ -5754,10 +5667,6 @@
             '<div class="field"><label>Name</label><input id="f-name" value="'+escapeHtml(form.name)+'" placeholder="e.g. Coca-Cola 500ml"></div>'+
             '<div class="field"><label>Category</label><input id="f-cat" value="'+escapeHtml(form.category)+'" placeholder="e.g. Beverages"></div>'+
           '</div>'+
-          '<div class="barcode-row">'+
-            '<div class="field"><label>Barcode (optional)</label><input id="f-barcode" value="'+escapeHtml(form.barcode||'')+'" placeholder="Scan or type barcode"></div>'+
-            '<button class="scan-btn" id="f-barcode-scan" type="button" title="Scan barcode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M3 12h18"/></svg></button>'+
-          '</div>'+
           '<div class="form-row">'+
             '<div class="field"><label>Selling price ('+state.shop.currency+')</label><input id="f-price" type="number" min="0" inputmode="decimal" value="'+form.price+'"></div>'+
             (isEdit ?
@@ -5911,7 +5820,7 @@
 
     // items
     var addItemBtn = document.getElementById('add-item-btn');
-    if(addItemBtn) addItemBtn.addEventListener('click', function(){ state.itemForm = {id:null, name:'', category:'', price:0, stock:0, image:'', purchasePrice:0, barcode:''}; render(); });
+    if(addItemBtn) addItemBtn.addEventListener('click', function(){ state.itemForm = {id:null, name:'', category:'', price:0, stock:0, image:'', purchasePrice:0}; render(); });
     document.querySelectorAll('[data-edit-item]').forEach(function(btn){
       btn.addEventListener('click', function(){
         var it = state.items.find(function(i){ return i.id===btn.getAttribute('data-edit-item'); });
@@ -5931,30 +5840,26 @@
         render();
       });
     });
-    var fBarcodeScan = document.getElementById('f-barcode-scan');
-    if(fBarcodeScan) fBarcodeScan.addEventListener('click', function(){ openScanner('item-form'); });
     var fSave = document.getElementById('f-save');
     if(fSave) fSave.addEventListener('click', async function(){
       var name = document.getElementById('f-name').value.trim();
       var cat = document.getElementById('f-cat').value.trim();
       var price = parseFloat(document.getElementById('f-price').value)||0;
       var image = state.itemForm.image || '';
-      var barcodeEl = document.getElementById('f-barcode');
-      var barcode = barcodeEl ? barcodeEl.value.trim() : '';
       if(!name) return;
       if(state.itemForm.id){
-        // Editing: name/category/selling price/image/barcode only. Stock and
-        // its purchase price are managed via +Restock on the Stock page so
+        // Editing: name/category/selling price/image only. Stock and its
+        // purchase price are managed via +Restock on the Stock page so
         // earlier batches never get silently overwritten here.
         var it = state.items.find(function(i){ return i.id===state.itemForm.id; });
-        it.name=name; it.category=cat; it.price=price; it.image=image; it.barcode=barcode;
+        it.name=name; it.category=cat; it.price=price; it.image=image;
       } else {
         var stockEl = document.getElementById('f-stock');
         var ppEl = document.getElementById('f-purchase-price');
         var stock = stockEl ? (parseInt(stockEl.value,10)||0) : 0;
         var purchasePrice = ppEl ? (parseFloat(ppEl.value)||0) : 0;
         var batches = stock>0 ? [{id:uid('b'), qty:stock, purchasePrice:purchasePrice, dateISO:new Date().toISOString()}] : [];
-        state.items.push({id:uid('it'), name:name, category:cat, price:price, stock:stock, image:image, purchasePrice:purchasePrice, barcode:barcode, batches:batches});
+        state.items.push({id:uid('it'), name:name, category:cat, price:price, stock:stock, image:image, purchasePrice:purchasePrice, batches:batches});
       }
       state.busyMsg = 'Saving item…';
       render();
@@ -6171,7 +6076,6 @@
     if(state.showReceipt) bindReceiptModal();
     if(state.showPaymentReceipt) bindPaymentReceiptModal();
     if(state.printerModalOpen) bindPrinterSettingsModal();
-    if(state.scanner.open) bindScannerModal();
 
     var topbarReconnect = document.getElementById('topbar-reconnect-printer');
     if(topbarReconnect) topbarReconnect.addEventListener('click', async function(){
@@ -6193,12 +6097,6 @@
       if(!ok && !state.printer.connected){
         await connectPrinter();
       }
-    });
-
-    var topbarScanBtn = document.getElementById('topbar-scan-btn');
-    if(topbarScanBtn) topbarScanBtn.addEventListener('click', function(){
-      if(!scannerSupported()) return;
-      openScanner('billing');
     });
   }
 
